@@ -1,0 +1,7 @@
+// constants.js
+
+const LOGIN = '/login'
+
+module.exports = {
+  LOGIN
+}
