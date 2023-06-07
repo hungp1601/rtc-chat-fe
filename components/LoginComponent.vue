@@ -102,8 +102,10 @@ export default {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           try {
-            console.log(this.$api)
-            const response = await this.$api.login({ email: this.form.email, password: this.form.password })
+            console.log(this.$api.login)
+            const response = await this.$axios.$post('http://localhost:3000/api/auth', { username: this.form.email, password: this.form.password })
+            const token = response.access_token
+            
             console.log(response)
           } catch (error) {
             // Handle login error
