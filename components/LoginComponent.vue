@@ -9,6 +9,9 @@
       <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
         Login
       </h2>
+      <p class="text-center text-red-500">
+        {{ errorMessage }}
+      </p>
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -60,6 +63,7 @@
 </template>
 
 <script>
+
 export default {
   data () {
     return {
@@ -67,7 +71,8 @@ export default {
         email: '',
         password: ''
       },
-      checked: false
+      checked: false,
+      errorMessage: ''
     }
   },
 
@@ -101,15 +106,16 @@ export default {
     submitForm (formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
+          let response
+
           try {
-            console.log(this.$api.login)
-            const response = await this.$axios.$post('http://localhost:3000/api/auth', { username: this.form.email, password: this.form.password })
+            response = await this.$axios.$post('http://localhost:3000/api/auth', { username: this.form.email, password: this.form.password })
             const token = response.access_token
-            
-            console.log(response)
+            this.$cookies.set('loggedIn', token)
           } catch (error) {
-            // Handle login error
-            console.error(error)
+            console.log(response)
+
+            this.errorMessage = response.message
           }
         }
       })

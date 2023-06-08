@@ -1,11 +1,11 @@
-const allowPagesWhenNotLogin = ['login', 'signup', 'forgot-password']
+import { ALLOW_PAGE } from '@/constants/allow_pages'
 
 export default function ({ app, route, redirect }) {
   if (!app.$cookies.get('loggedIn')) {
-    if (!allowPagesWhenNotLogin.includes(route.name)) {
+    if (!ALLOW_PAGE.includes(route.name)) {
       return redirect('/login')
     }
-  } else if (allowPagesWhenNotLogin.includes(route.name)) {
+  } else if (ALLOW_PAGE.includes(route.name)) {
     return redirect('/')
   }
 }

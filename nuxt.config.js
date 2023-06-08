@@ -66,12 +66,22 @@ export default {
     }
   },
 
+  generate: {
+    fallback: true
+  },
+
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },
 
   router: {
-    middleware: ['authenticated']
+    middleware: ['authenticated'],
+    extendRoutes (routes, resolve) {
+      routes.push({
+        path: '*',
+        component: resolve(__dirname, 'pages/error.vue')
+      })
+    }
   }
   // auth: {
   //   // ...
